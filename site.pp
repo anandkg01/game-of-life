@@ -1,6 +1,4 @@
-include 'docker'
-
-file { '/usr/local/tomcat/webapps':
-          ensure => present,
-          source => ".",
+node 'test02.edureka.com'
+{
+ include 'docker'
 }
