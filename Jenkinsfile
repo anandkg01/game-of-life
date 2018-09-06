@@ -34,7 +34,7 @@ pipeline {
 
             steps {
                 withMaven(maven : 'maven_3_5_4') {
-                    sh pmd:pmd                    
+                    sh 'mvn pmd:pmd' 
                 }
                 pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: ' **/pmd.xml', unHealthy: ''
             }
