@@ -29,24 +29,19 @@ pipeline {
                 
             }
         }
+        
+        /* In order to push the image to DockerHub:
+         * First build it, and push it */   
            
-           stage ('Code Review') {
-
-            steps {
-                withMaven(maven : 'maven_3_5_4') {
-                    sh 'mvn pmd:pmd' 
-                }
-                
-            }
+        stage('Build image') {
+            app = docker.build("game-of-life:${env.BUILD_ID}")
         }
 
-
-        stage ('Deployment Stage') {
-            steps {
-                withMaven(maven : 'maven_3_5_4') {
-                    sh 'mvn deploy'
-                }
-            }
+        stage('Push image') {
+            docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredential') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
         }
+    }
     }
 }
