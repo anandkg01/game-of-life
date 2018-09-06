@@ -29,6 +29,17 @@ pipeline {
                 
             }
         }
+           
+        stage ('Package archieve') {
+
+            steps {
+                withMaven(maven : 'maven_3_5_4') {
+                    sh 'mvn package'
+                  }
+                archive '**/target/gameoflife.war'
+                
+            }
+        }
         
         /* In order to push the image to DockerHub:
          * First build it, and push it */   
