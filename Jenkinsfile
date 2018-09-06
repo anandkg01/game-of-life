@@ -33,11 +33,11 @@ pipeline {
         /* In order to push the image to DockerHub:
          * First build it, and push it */   
            
-        stage('Build image') {
+        stage('Build the image') {
             app = docker.build("game-of-life:${env.BUILD_ID}")
         }
 
-        stage('Push image') {
+        stage('Deploy to Docker Hub') {
             docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredential') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
