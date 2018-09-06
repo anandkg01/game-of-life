@@ -1,5 +1,5 @@
-FROM tomcat:8.0.21-jre8
-
+FROM tomcat_7.0.77:latest
 MAINTAINER anandgupta01@gmail.com
-
-COPY ./target/gameoflife.war /usr/local/tomcat/webapps/
+COPY gameoflife.war /usr/local/tomcat/webapps/
+EXPOSE 8080
+CMD ["catalina.sh", "run" ]
