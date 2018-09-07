@@ -25,7 +25,7 @@ tomcat::instance { 'default':
 # If this file does not exist, create it manually or use a file resource to create the same. 
 tomcat::war { 'addressbook.war':
                catalina_base => '/opt/tomcat',
-               war_source => 'puppet:///modules/tomcat/mycode.war',
+               war_source => 'puppet:///modules/tomcat/addressbook.war',
             }
             
 }
