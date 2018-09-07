@@ -1,4 +1,11 @@
 pipeline {
+    
+    environment {
+    registry = "anandgupta01/game_of_life"
+    registryCredential = 'dockerHubCredential'
+    dockerImage = ''
+  }
+    
     agent any
     
        stages {
@@ -48,7 +55,7 @@ pipeline {
                     echo 'Building image..'
                 
                     script {
-                    def app = docker.build("game-of-life:${env.BUILD_ID}")
+                    dockerImage  = docker.build registry + ":$BUILD_NUMBER"
                     }
                 }
         }
@@ -60,9 +67,9 @@ pipeline {
                 
                     script {
             
-                        docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredential') {
-                            app.push("${env.BUILD_NUMBER}")
-                            app.push("latest")
+                        docker.withRegistry('', registryCredential) {
+                            dockerImage.push("${env.BUILD_NUMBER}")
+                            dockerImage.push("latest")
                         }
                     }
                 }
