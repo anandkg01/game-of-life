@@ -37,11 +37,10 @@ pipeline {
                     sh 'mvn package'
                   }
                 archive '**/target/gameoflife.war'
-                
             }
         }
-        
-        /* In order to push the image to DockerHub:
+           
+       /* In order to push the image to DockerHub:
          * First build it, and push it */   
            
         stage('Build the image') {
@@ -51,10 +50,9 @@ pipeline {
 
         stage('Deploy to Docker Hub') {
             
-                docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredential') {
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredential') 
                 app.push("${env.BUILD_NUMBER}")
                 app.push("latest")
         }
-    }
     }
 }
