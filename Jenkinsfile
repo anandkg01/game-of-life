@@ -44,15 +44,28 @@ pipeline {
          * First build it, and push it */   
            
         stage('Build the image') {
-            
-                app = docker.build("game-of-life:${env.BUILD_ID}")
+            steps {
+                    echo 'Building image..'
+                
+                    script {
+                    app = docker.build("game-of-life:${env.BUILD_ID}")
+                    }
+                }
         }
 
         stage('Deploy to Docker Hub') {
             
-                docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredential') 
-                app.push("${env.BUILD_NUMBER}")
-                app.push("latest")
+            steps {
+                    echo 'Deploy to Docker Hub...'
+                
+                    script {
+            
+                        docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredential') {
+                            app.push("${env.BUILD_NUMBER}")
+                            app.push("latest")
+                        }
+                    }
+                }
         }
     }
 }
