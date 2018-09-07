@@ -48,7 +48,7 @@ pipeline {
                     echo 'Building image..'
                 
                     script {
-                    app = docker.build("game-of-life:${env.BUILD_ID}")
+                    def app = docker.build("game-of-life:${env.BUILD_ID}")
                     }
                 }
         }
