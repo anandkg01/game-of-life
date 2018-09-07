@@ -44,6 +44,7 @@ pipeline {
                     sh 'mvn package'
                   }
                 archive '**/target/gameoflife.war'
+                sh 'COPY /var/jenkins_home/workspace/Build_Pipeline/gameoflife-web/target/gameoflife.war  /etc/puppet/modules/tomcat/gameoflife.war'
             }
         }
            
