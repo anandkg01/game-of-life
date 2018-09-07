@@ -37,13 +37,14 @@ pipeline {
             }
         }
            
-        stage ('Package archieve') {
+        stage ('Package archieve and Deploy to Puppet') {
 
             steps {
                 withMaven(maven : 'maven_3_5_4') {
                     sh 'mvn package'
                   }
                 archive '**/target/gameoflife.war'
+                // Copy the war file to tomcat module inside Puppet
                 sh 'COPY /var/jenkins_home/workspace/Build_Pipeline/gameoflife-web/target/gameoflife.war  /etc/puppet/modules/tomcat/gameoflife.war'
             }
         }
